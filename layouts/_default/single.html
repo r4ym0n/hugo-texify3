@@ -6,6 +6,7 @@
 {{ with resources.Get "sass/layouts/sharingbuttons.scss" | toCSS $options | postCSS | minify | fingerprint }}
   <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
 {{ end }}
+
 {{ end }}
 
 {{ define "main" }}

@@ -62,6 +62,27 @@
   {{ with resources.Get "sass/layouts/content.scss" | toCSS $options | postCSS | minify | fingerprint }}
     <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{ end }}
+  
+  <!-- add by ryan -->
+  {{- $common := (resources.Match "css/common/*.css") | resources.Concat "assets/css/common.css" }}
+  {{- $core := (slice $common ) | resources.Concat "assets/css/user-core.css" | resources.Minify }}
+  {{- $stylesheet := $core | fingerprint }}
+  <link rel="stylesheet" href="{{ $stylesheet.RelPermalink }}" integrity="{{ $stylesheet.Data.Integrity }}" crossorigin="anonymous">
+
+  {{- /* Search */}}
+{{- if (eq .Layout `search`) -}}
+<link crossorigin="anonymous" rel="preload" as="fetch" href="../index.json">
+{{- $fastsearch := resources.Get "js/fastsearch.js" | js.Build (dict "params" (dict "fuseOpts" site.Params.fuseOpts)) | resources.Minify }}
+{{- $fusejs := resources.Get "js/fuse.basic.min.js" }}
+{{- $license_js := resources.Get "js/license.js" }}
+{{- if not site.Params.assets.disableFingerprinting }}
+{{- $search := (slice $fusejs  $fastsearch ) | resources.Concat "assets/js/search.js" | fingerprint }}
+<script defer crossorigin="anonymous" src="{{ $search.RelPermalink }}" integrity="{{ $search.Data.Integrity }}"></script>
+{{- else }}
+{{- $search := (slice $fusejs $fastsearch ) | resources.Concat "assets/js/search.js" }}
+<script defer crossorigin="anonymous" src="{{ $search.RelPermalink }}"></script>
+{{- end }}
+{{- end -}}
 
   <!-- title -->
   {{ if .IsHome }}
