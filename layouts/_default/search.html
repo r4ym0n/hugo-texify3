@@ -1,28 +1,37 @@
-{{- define "main" }}
+{{- define "head" }}
+{{ $options := dict "transpiler" "dartsass" "targetPath" "css/search.css" }}
+{{ with resources.Get "sass/layouts/search.scss" | toCSS $options | postCSS | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+{{ end }}
+{{ $opts := dict "minify" true "JSXFactory" "h" }}
+{{ with resources.Get "js/fastsearch.js" | js.Build $opts }}
+  <script defer crossorigin="anonymous" src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}"></script>
+{{ end }}
+{{- end }}
 
-<header class="page-header">
-    <h1>{{- (printf "%s&nbsp;" .Title ) | htmlUnescape -}}
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
+{{- define "main" }}
+<main id="main" class="search">
+  <header class="page-header">
+    <h1>
+      {{- .Title -}}
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
     </h1>
     {{- if .Description }}
     <div class="post-description">
-        {{ .Description }}
+      {{ .Description }}
     </div>
     {{- end }}
-    {{- if not (.Param "hideMeta") }}
-    <div class="post-meta">
-    </div>
-    {{- end }}
-</header>
+  </header>
 
-<div id="searchbox">
+  <div id="searchbox">
     <input id="searchInput" autofocus placeholder="{{ .Params.placeholder | default (printf "%s ↵" .Title) }}"
         aria-label="search" type="search" autocomplete="off">
-    <ul id="searchResults" aria-label="search results"></ul>
-</div>
-
+  </div>
+  
+  <ul id="searchResults" aria-label="search results"></ul>
+</main>
 {{- end }}{{/* end main */}}
