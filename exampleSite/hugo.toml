@@ -1,17 +1,15 @@
-baseURL = "https://michaelneuper.github.io/hugo-texify3/"
+baseURL = "https://texify3.michaelneuper.com"
 disqusShortname = ""
 enableGitInfo = true
 enableRobotsTXT = true
 hasCJKLanguage = true
 languageCode = "en"
-paginate = 5
 rssLimit = 10
 theme = "hugo-texify3"
 title = "TeXify3"
 
-[author]
-name = "Michael Neuper"
-email = "michael@michaelneuper.com"
+[pagination]
+pagerSize = 5
 
 [taxonomies]
 tags = "tags"
@@ -19,6 +17,7 @@ categories = "categories"
 
 [params]
 title="TeXify3"
+author = "Michael Neuper"
 description = "TeXify3 - A LaTeX-style hugo theme with the gruvbox color scheme for personal blogging"
 footnote = """
 Powered by  <a class=link href=https://gohugo.io target=_blank rel=noopener>Hugo</a> | 
@@ -37,7 +36,7 @@ numberedSubtitles = true
   [params.commentEngine]
   code = """
   <script src="https://giscus.app/client.js"
-        data-repo="michaelneuper/hugo-texify3"
+        data-repo="michaelneuper/website"
         data-repo-id="R_kgDOIjPNaQ"
         data-category="General"
         data-category-id="DIC_kwDOIjPNac4CaklA"
@@ -46,7 +45,7 @@ numberedSubtitles = true
         data-reactions-enabled="1"
         data-emit-metadata="0"
         data-input-position="top"
-        data-theme=""
+        data-theme="gruvbox"
         data-lang="en"
         data-loading="lazy"
         crossorigin="anonymous"
