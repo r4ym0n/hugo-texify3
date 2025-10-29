@@ -22,6 +22,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{{ .Site.BaseURL }}/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ .Site.BaseURL }}/images/favicon-16x16.png">
 
+  <!-- Preload critical fonts to reduce render blocking -->
+  <link rel="preload" href='{{ "fonts/lmroman-normal.woff" | relURL }}' as="font" type="font/woff" crossorigin>
+  <link rel="preload" href='{{ "fonts/lmroman-bold.woff" | relURL }}' as="font" type="font/woff" crossorigin>
+
   <!-- keywords -->
   {{ if .Keywords }}
   <meta name="keywords" content='{{ delimit .Keywords " " }} {{ delimit .Site.Params.keywords " " }}'>
