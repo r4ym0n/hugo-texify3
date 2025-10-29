@@ -13,7 +13,7 @@
 
 - Any comment engine (giscus, remark42, hyvor, etc.)
 - [Mermaid](https://mermaid.js.org) support
-- DuckDuckGo search
+- Built-in site search with [Fuse.js](https://fusejs.io/) - fast, fuzzy search across all content
 - Buymeacoffee widget
 - Auto numbered subtitles
 - [Disqus](https://disqus.com/) & Google Analytics
@@ -39,6 +39,46 @@ Visit the [wiki](https://github.com/michaelneuper/hugo-texify3/wiki) for more in
 
 See [`hugo.toml`](https://github.com/weastur/hugo-texify2/blob/master/hugo.toml)
 for an example configuration.
+
+### Search Configuration
+
+The theme includes built-in search functionality powered by Fuse.js. To enable search:
+
+1. Create a search page (e.g., `content/search.md`):
+```markdown
+---
+title: "Search"
+layout: "search"
+---
+```
+
+2. Add search output to your site config:
+```yaml
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON  # Required for search index
+```
+
+3. (Optional) Customize Fuse.js search options in your config:
+```yaml
+params:
+  fuseOpts:
+    isCaseSensitive: false
+    includeScore: false
+    shouldSort: true
+    threshold: 0.4
+    distance: 100
+    ignoreLocation: true
+    keys:
+      - title
+      - permalink
+      - summary
+      - content
+```
+
+The search page will automatically index all your content and provide fast, fuzzy search with keyboard navigation support.
 
 ## Acknowledgement
 
